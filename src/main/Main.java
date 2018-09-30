@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JCheckBox;
@@ -158,7 +160,6 @@ public class Main extends JFrame
 			}
 		});
 		
-		/*
 		try 
 		{
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
@@ -183,8 +184,7 @@ public class Main extends JFrame
 				e1.printStackTrace();
 			} 
 		}
-		*/
-
+		
 		ATT_lbl = new JLabel("ATT/RNG");
 		STR_lbl = new JLabel("STR/RNG");
 		ATT_BONUS__lbl = new JLabel("ATT_BONUS");
@@ -226,7 +226,7 @@ public class Main extends JFrame
 		RANGED_checkBox = new JCheckBox("");
 		DHAROKS_checkBox = new JCheckBox("");
 		CALCULATE_btn = new JButton("Calculate");
-
+		
 		ATT_lbl.setBounds(34, 14, 105, 23);
 		STR_lbl.setBounds(34, 45, 105, 23);
 		ATT_BONUS__lbl.setBounds(34, 76, 105, 23);
@@ -275,7 +275,7 @@ public class Main extends JFrame
 		RANGED_checkBox.setBounds(149, 231, 97, 23);
 		DHAROKS_checkBox.setBounds(399, 200, 97, 23);
 
-		ENEMY_DEF_textField.setText("0");
+		ENEMY_DEF_textField.setText("1");
 		ENEMY_DEF_textField.setColumns(10);
 		ENEMY_DEF_textField.setBounds(399, 14, 86, 23);
 
@@ -395,20 +395,7 @@ public class Main extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				maxHit = formulas.maxHit(Integer.parseInt(STR_textField.getText()), Integer.parseInt(STR_BONUS_textField.getText()),
-						STR_POTION_comboBox.getSelectedIndex(), STR_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(),
-						STANCE_comboBox.getSelectedIndex(), RANGED_checkBox.isSelected());
-				
-				accuracy = formulas.accuracy(Integer.parseInt(ATT_textField.getText()), Integer.parseInt(ATT_BONUS_textField.getText()),
-						ATT_POTION_comboBox.getSelectedIndex(), ATT_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(), 
-						STANCE_comboBox.getSelectedIndex(),  Integer.parseInt(ENEMY_DEF_textField.getText()), 
-						Integer.parseInt(ENEMY_DEF_BONUS_textField.getText()));
-				
-				dps = 1 / Double.parseDouble(AS_textField.getText()) * accuracy * (maxHit / 2);
-				
-				MAX_HIT_RESULT_lbl.setText(integerFormat.format(maxHit));
-				ACCURACY_RESULT_lbl.setText(realFormat.format(100 * accuracy) + "%");
-				DPS_RESULT_lbl.setText(realFormat.format(dps));
+				calculate();
 			}
 		});
 		
@@ -454,5 +441,25 @@ public class Main extends JFrame
 		contentPane.add(CUR_HP_textField);
 		contentPane.add(MAX_HP_textField);
 		
+		calculate();
+		
+	}
+	
+	private void calculate()
+	{
+		maxHit = formulas.maxHit(Integer.parseInt(STR_textField.getText()), Integer.parseInt(STR_BONUS_textField.getText()),
+				STR_POTION_comboBox.getSelectedIndex(), STR_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(),
+				STANCE_comboBox.getSelectedIndex(), RANGED_checkBox.isSelected());
+		
+		accuracy = formulas.accuracy(Integer.parseInt(ATT_textField.getText()), Integer.parseInt(ATT_BONUS_textField.getText()),
+				ATT_POTION_comboBox.getSelectedIndex(), ATT_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(), 
+				STANCE_comboBox.getSelectedIndex(),  Integer.parseInt(ENEMY_DEF_textField.getText()), 
+				Integer.parseInt(ENEMY_DEF_BONUS_textField.getText()));
+		
+		dps = 1 / Double.parseDouble(AS_textField.getText()) * accuracy * (maxHit / 2);
+		
+		MAX_HIT_RESULT_lbl.setText(integerFormat.format(maxHit));
+		ACCURACY_RESULT_lbl.setText(realFormat.format(100 * accuracy) + "%");
+		DPS_RESULT_lbl.setText(realFormat.format(dps));
 	}
 }
