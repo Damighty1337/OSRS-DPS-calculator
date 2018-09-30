@@ -1,13 +1,12 @@
 package main;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JCheckBox;
@@ -18,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.awt.event.ItemEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -28,54 +28,6 @@ public class Main extends JFrame
 	Formulas formulas = new Formulas();
 
 	private JPanel contentPane;
-
-	private JMenuBar menuBar;
-	private JMenu fileMenu;
-	private JMenuItem helpMenuItem;
-	private JMenuItem optionsMenuItem;
-	private JMenuItem exitMenuItem;
-	
-	private JLabel ATT_lbl;
-	private JLabel STR_lbl;
-	private JLabel ATT_BONUS__lbl;
-	private JLabel STR_BONUS_lbl;
-	private JLabel AS_lbl;
-	private JLabel ENEMY_DEF_lbl;
-	private JLabel ENEMY_DEF_BONUS_lbl;
-	private JLabel STANCE_lbl;
-	private JLabel VOID_label;
-	private JLabel RANGED_lbl;
-	private JLabel MAX_HIT_lbl;
-	private JLabel ACCURACY_lbl;
-	private JLabel DPS_lbl;
-	private JLabel MAX_HIT_RESULT_lbl;
-	private JLabel ACCURACY_RESULT_lbl;
-	private JLabel DPS_RESULT_lbl;
-	private JLabel ATT_POT_lbl;
-	private JLabel STR_POT_lbl;
-	private JLabel ATT_PRAYER_lbl;
-	private JLabel STR_PRAYER_lbl;
-	private JLabel DHAROKS_lbl;
-	private JLabel HP_lbl;
-	private JLabel HP_SEPERATOR_label;
-	private JTextField ATT_textField;
-	private JTextField STR_textField;
-	private JTextField ATT_BONUS_textField;
-	private JTextField STR_BONUS_textField;
-	private JTextField AS_textField;
-	private JTextField ENEMY_DEF_textField;
-	private JTextField ENEMY_DEF_BONUS_textField;
-	private JTextField CUR_HP_textField;
-	private JTextField MAX_HP_textField;
-	private JComboBox<String> STANCE_comboBox;
-	private JComboBox<String> ATT_POTION_comboBox;
-	private JComboBox<String> STR_POTION_comboBox;
-	private JComboBox<String> ATT_PRAYER_comboBox;
-	private JComboBox<String> STR_PRAYER_comboBox;
-	private JCheckBox VOID_checkBox;
-	private JCheckBox RANGED_checkBox;
-	private JCheckBox DHAROKS_checkBox;
-	private JButton CALCULATE_btn;
 
 	private DecimalFormat integerFormat = new DecimalFormat("#");
 	private DecimalFormat realFormat = new DecimalFormat("#.##");
@@ -117,11 +69,11 @@ public class Main extends JFrame
 		
 		setContentPane(contentPane);
 
-		fileMenu = new JMenu("Menu");
-		helpMenuItem = new JMenuItem("Help");
-		optionsMenuItem = new JMenuItem("Options");
-		exitMenuItem = new JMenuItem("Exit");
-		menuBar = new JMenuBar();
+		JMenu fileMenu = new JMenu("Menu");
+		JMenuItem helpMenuItem = new JMenuItem("Help");
+		JMenuItem optionsMenuItem = new JMenuItem("Options");
+		JMenuItem exitMenuItem = new JMenuItem("Exit");
+		JMenuBar menuBar = new JMenuBar();
 		
 		fileMenu.add(helpMenuItem);
 		fileMenu.add(optionsMenuItem);
@@ -154,96 +106,76 @@ public class Main extends JFrame
 			}
 		});
 		
-		try 
-		{
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
-		    {
-		        if ("Nimbus".equals(info.getName())) 
-		        {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		}
-		catch (Exception e1) 
-		{
-			e1.printStackTrace();
-			
-			try
-			{
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			}
-			catch (Exception e2)
-			{
-				e2.printStackTrace();
-			} 
-		}
+		ArrayList<Component> labels = new ArrayList<Component>();
 		
-		ATT_lbl = new JLabel("ATT/RNG");
-		STR_lbl = new JLabel("STR/RNG");
-		ATT_BONUS__lbl = new JLabel("ATT_BONUS");
-		STR_BONUS_lbl = new JLabel("STR_BONUS");
-		AS_lbl = new JLabel("AS");
-		ENEMY_DEF_lbl = new JLabel("E_DEF");
-		ENEMY_DEF_BONUS_lbl = new JLabel("E_DEF_BONUS");
-		STANCE_lbl = new JLabel("Stance");
-		VOID_label = new JLabel("Void");
-		RANGED_lbl = new JLabel("Ranged");
-		MAX_HIT_lbl = new JLabel("Max hit:");
-		ACCURACY_lbl = new JLabel("Accuracy:");
-		DPS_lbl = new JLabel("DPS:");
-		MAX_HIT_RESULT_lbl = new JLabel("0");
-		ACCURACY_RESULT_lbl = new JLabel("0%");
-		DPS_RESULT_lbl = new JLabel("0");
-		ATT_POT_lbl = new JLabel("Potion 1");
-		STR_POT_lbl = new JLabel("Potion 2");
-		ATT_PRAYER_lbl = new JLabel("Prayer 1");
-		STR_PRAYER_lbl = new JLabel("Prayer 2");
-		DHAROKS_lbl = new JLabel("Dharoks");
-		HP_lbl = new JLabel("HP");
-		HP_SEPERATOR_label = new JLabel("/");
-		ATT_textField = new JTextField();
-		STR_textField = new JTextField();
-		ATT_BONUS_textField = new JTextField();
-		STR_BONUS_textField = new JTextField();
-		AS_textField = new JTextField();
-		ENEMY_DEF_textField = new JTextField();
-		ENEMY_DEF_BONUS_textField = new JTextField();
-		CUR_HP_textField = new JTextField();
-		MAX_HP_textField = new JTextField();
-		STANCE_comboBox = new JComboBox<String>();
-		ATT_POTION_comboBox = new JComboBox<String>();
-		STR_POTION_comboBox = new JComboBox<String>();
-		ATT_PRAYER_comboBox = new JComboBox<String>();
-		STR_PRAYER_comboBox = new JComboBox<String>();
-		VOID_checkBox = new JCheckBox("");
-		RANGED_checkBox = new JCheckBox("");
-		DHAROKS_checkBox = new JCheckBox("");
-		CALCULATE_btn = new JButton("Calculate");
+		labels.add(new JLabel("ATT/RNG"));		// 0
+		labels.add(new JLabel("STR/RNG"));		// 1
+		labels.add(new JLabel("ATT_BONUS"));	// 2
+		labels.add(new JLabel("STR_BONUS"));	// 3
+		labels.add(new JLabel("AS"));			// 4
+		labels.add(new JLabel("E_DEF"));		// 5
+		labels.add(new JLabel("E_DEF_BONUS"));	// 6
+		labels.add(new JLabel("Stance"));		// 7
+		labels.add(new JLabel("Void"));			// 8
+		labels.add(new JLabel("Ranged"));		// 9
+		labels.add(new JLabel("Max hit:"));		// 10
+		labels.add(new JLabel("Accuracy:"));	// 11
+		labels.add(new JLabel("DPS:"));			// 12
+		labels.add(new JLabel("Potion 1"));		// 13
+		labels.add(new JLabel("Potion 2"));		// 14
+		labels.add(new JLabel("Prayer 1"));		// 15
+		labels.add(new JLabel("Prayer 2"));		// 16
+		labels.add(new JLabel("Dharoks"));		// 17
+		labels.add(new JLabel("HP"));			// 18
+		labels.add(new JLabel("/"));			// 19
 		
-		ATT_lbl.setBounds(34, 14, 105, 23);
-		STR_lbl.setBounds(34, 45, 105, 23);
-		ATT_BONUS__lbl.setBounds(34, 76, 105, 23);
-		STR_BONUS_lbl.setBounds(34, 107, 105, 23);
-		AS_lbl.setBounds(34, 138, 105, 23);
-		ENEMY_DEF_lbl.setBounds(284, 14, 105, 23);
-		ENEMY_DEF_BONUS_lbl.setBounds(284, 45, 105, 23);
-		STANCE_lbl.setBounds(34, 169, 105, 23);
-		VOID_label.setBounds(34, 200, 105, 23);
-		RANGED_lbl.setBounds(34, 231, 105, 23);
-		MAX_HIT_lbl.setBounds(34, 315, 105, 14);
-		ACCURACY_lbl.setBounds(34, 340, 105, 14);
-		DPS_lbl.setBounds(34, 365, 105, 14);
+		labels.get(0).setBounds(34, 14, 105, 23);
+		labels.get(1).setBounds(34, 45, 105, 23);
+		labels.get(2).setBounds(34, 76, 105, 23);
+		labels.get(3).setBounds(34, 107, 105, 23);
+		labels.get(4).setBounds(34, 138, 105, 23);
+		labels.get(5).setBounds(284, 14, 105, 23);
+		labels.get(6).setBounds(284, 45, 105, 23);
+		labels.get(7).setBounds(34, 169, 105, 23);
+		labels.get(8).setBounds(34, 200, 105, 23);
+		labels.get(9).setBounds(34, 231, 105, 23);
+		labels.get(10).setBounds(34, 315, 105, 14);
+		labels.get(11).setBounds(34, 340, 105, 14);
+		labels.get(12).setBounds(34, 365, 105, 14);
+		labels.get(13).setBounds(284, 76, 105, 23);
+		labels.get(14).setBounds(284, 107, 105, 23);	
+		labels.get(15).setBounds(284, 138, 105, 23);
+		labels.get(16).setBounds(284, 169, 105, 23);
+		labels.get(17).setBounds(284, 200, 105, 23);
+		labels.get(18).setBounds(284, 231, 105, 20);
+		labels.get(19).setBounds(444, 232, 46, 23);
+		
+		JLabel MAX_HIT_RESULT_lbl = new JLabel("0");
+		JLabel ACCURACY_RESULT_lbl = new JLabel("0%");
+		JLabel DPS_RESULT_lbl = new JLabel("0");
+		
+		JTextField ATT_textField = new JTextField();
+		JTextField STR_textField = new JTextField();
+		JTextField ATT_BONUS_textField = new JTextField();
+		JTextField STR_BONUS_textField = new JTextField();
+		JTextField AS_textField = new JTextField();
+		JTextField ENEMY_DEF_textField = new JTextField();
+		JTextField ENEMY_DEF_BONUS_textField = new JTextField();
+		JTextField CUR_HP_textField = new JTextField();
+		JTextField MAX_HP_textField = new JTextField();
+		JComboBox<String> STANCE_comboBox = new JComboBox<String>();
+		JComboBox<String> ATT_POTION_comboBox = new JComboBox<String>();
+		JComboBox<String> STR_POTION_comboBox = new JComboBox<String>();
+		JComboBox<String> ATT_PRAYER_comboBox = new JComboBox<String>();
+		JComboBox<String> STR_PRAYER_comboBox = new JComboBox<String>();
+		JCheckBox VOID_checkBox = new JCheckBox("");
+		JCheckBox RANGED_checkBox = new JCheckBox("");
+		JCheckBox DHAROKS_checkBox = new JCheckBox("");
+		JButton CALCULATE_btn = new JButton("Calculate");
+		
 		MAX_HIT_RESULT_lbl.setBounds(149, 315, 86, 14);
 		ACCURACY_RESULT_lbl.setBounds(149, 340, 86, 14);
 		DPS_RESULT_lbl.setBounds(149, 365, 86, 14);
-		ATT_POT_lbl.setBounds(284, 76, 105, 23);
-		STR_POT_lbl.setBounds(284, 107, 105, 23);	
-		ATT_PRAYER_lbl.setBounds(284, 138, 105, 23);
-		STR_PRAYER_lbl.setBounds(284, 169, 105, 23);
-		DHAROKS_lbl.setBounds(284, 200, 105, 23);
-		HP_lbl.setBounds(284, 231, 105, 20);
-		HP_SEPERATOR_label.setBounds(444, 232, 46, 23);
 		
 		ATT_textField.setText("1");
 		ATT_textField.setBounds(149, 14, 86, 23);
@@ -411,72 +343,52 @@ public class Main extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				calculate();
+				maxHit = formulas.maxHit(Integer.parseInt(STR_textField.getText()), Integer.parseInt(STR_BONUS_textField.getText()),
+						STR_POTION_comboBox.getSelectedIndex(), STR_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(),
+						STANCE_comboBox.getSelectedIndex(), RANGED_checkBox.isSelected(), DHAROKS_checkBox.isSelected(), 
+						Integer.parseInt(CUR_HP_textField.getText()), Integer.parseInt(MAX_HP_textField.getText()));
+				
+				accuracy = formulas.accuracy(Integer.parseInt(ATT_textField.getText()), Integer.parseInt(ATT_BONUS_textField.getText()),
+						ATT_POTION_comboBox.getSelectedIndex(), ATT_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(), 
+						STANCE_comboBox.getSelectedIndex(),  Integer.parseInt(ENEMY_DEF_textField.getText()), 
+						Integer.parseInt(ENEMY_DEF_BONUS_textField.getText()));
+				
+				dps = 1 / Double.parseDouble(AS_textField.getText()) * accuracy * (maxHit / 2);
+				
+				MAX_HIT_RESULT_lbl.setText(integerFormat.format(maxHit));
+				ACCURACY_RESULT_lbl.setText(realFormat.format(100 * accuracy) + "%");
+				DPS_RESULT_lbl.setText(realFormat.format(dps));
 			}
 		});
 		
-		contentPane.add(STR_textField);
-		contentPane.add(ATT_BONUS_textField);
-		contentPane.add(STR_BONUS_textField);
-		contentPane.add(ATT_textField);
-		contentPane.add(AS_textField);
-		contentPane.add(ATT_lbl);
-		contentPane.add(STR_lbl);
-		contentPane.add(ATT_BONUS__lbl);
-		contentPane.add(STR_BONUS_lbl);
-		contentPane.add(AS_lbl);
-		contentPane.add(ENEMY_DEF_lbl);
-		contentPane.add(ENEMY_DEF_textField);
-		contentPane.add(ENEMY_DEF_BONUS_lbl);
-		contentPane.add(ENEMY_DEF_BONUS_textField);
-		contentPane.add(STANCE_lbl);
-		contentPane.add(VOID_label);
-		contentPane.add(VOID_checkBox);
-		contentPane.add(MAX_HIT_lbl);
-		contentPane.add(ACCURACY_lbl);
-		contentPane.add(DPS_RESULT_lbl);
-		contentPane.add(DPS_lbl);
-		contentPane.add(MAX_HIT_RESULT_lbl);
-		contentPane.add(ACCURACY_RESULT_lbl);
-		contentPane.add(RANGED_checkBox);
-		contentPane.add(RANGED_lbl);
-		contentPane.add(ATT_POTION_comboBox);
-		contentPane.add(STR_PRAYER_comboBox);
-		contentPane.add(STANCE_comboBox);
-		contentPane.add(STR_POTION_comboBox);
-		contentPane.add(ATT_PRAYER_comboBox);	
-		contentPane.add(CALCULATE_btn);
-		contentPane.add(ATT_POT_lbl);
-		contentPane.add(STR_POT_lbl);
-		contentPane.add(ATT_PRAYER_lbl);
-		contentPane.add(DHAROKS_lbl);
-		contentPane.add(DHAROKS_checkBox);
-		contentPane.add(HP_lbl);
-		contentPane.add(HP_SEPERATOR_label);
-		contentPane.add(STR_PRAYER_lbl);
-		contentPane.add(CUR_HP_textField);
-		contentPane.add(MAX_HP_textField);
+		for (Component c : labels)
+		{
+			getContentPane().add(c);
+		}
 		
-		calculate();
+		getContentPane().add(ATT_textField);
+		getContentPane().add(STR_textField);
+		getContentPane().add(ATT_BONUS_textField);
+		getContentPane().add(STR_BONUS_textField);
+		getContentPane().add(AS_textField);
+		getContentPane().add(ENEMY_DEF_textField);
+		getContentPane().add(ENEMY_DEF_BONUS_textField);
+		getContentPane().add(STANCE_comboBox);
+		getContentPane().add(VOID_checkBox);
+		getContentPane().add(RANGED_checkBox);
+		getContentPane().add(MAX_HIT_RESULT_lbl);
+		getContentPane().add(ACCURACY_RESULT_lbl);
+		getContentPane().add(DPS_RESULT_lbl);
+		getContentPane().add(ATT_POTION_comboBox);
+		getContentPane().add(STR_POTION_comboBox);
+		getContentPane().add(ATT_PRAYER_comboBox);	
+		getContentPane().add(STR_PRAYER_comboBox);
+		getContentPane().add(CALCULATE_btn);
+		getContentPane().add(DHAROKS_checkBox);
+		getContentPane().add(CUR_HP_textField);
+		getContentPane().add(MAX_HP_textField);
 		
-	}
-	
-	private void calculate()
-	{
-		maxHit = formulas.maxHit(Integer.parseInt(STR_textField.getText()), Integer.parseInt(STR_BONUS_textField.getText()),
-				STR_POTION_comboBox.getSelectedIndex(), STR_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(),
-				STANCE_comboBox.getSelectedIndex(), RANGED_checkBox.isSelected(), DHAROKS_checkBox.isSelected(), 
-				Integer.parseInt(CUR_HP_textField.getText()), Integer.parseInt(MAX_HP_textField.getText()));
-		
-		accuracy = formulas.accuracy(Integer.parseInt(ATT_textField.getText()), Integer.parseInt(ATT_BONUS_textField.getText()),
-				ATT_POTION_comboBox.getSelectedIndex(), ATT_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(), 
-				STANCE_comboBox.getSelectedIndex(),  Integer.parseInt(ENEMY_DEF_textField.getText()), 
-				Integer.parseInt(ENEMY_DEF_BONUS_textField.getText()));
-		
-		dps = 1 / Double.parseDouble(AS_textField.getText()) * accuracy * (maxHit / 2);
-		
-		MAX_HIT_RESULT_lbl.setText(integerFormat.format(maxHit));
-		ACCURACY_RESULT_lbl.setText(realFormat.format(100 * accuracy) + "%");
-		DPS_RESULT_lbl.setText(realFormat.format(dps));
+		CALCULATE_btn.doClick();
+
 	}
 }
