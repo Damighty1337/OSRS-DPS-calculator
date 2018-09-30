@@ -7,17 +7,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
 import java.awt.event.ItemEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class Main extends JFrame
 {
@@ -38,6 +39,11 @@ public class Main extends JFrame
 	private JTextField ENEMY_DEF_textField;
 	private JLabel ENEMY_DEF_BONUS_lbl;
 	private JTextField ENEMY_DEF_BONUS_textField;
+	
+	private JMenu fileMenu;
+	private JMenuItem helpMenuItem;
+	private JMenuItem optionsMenuItem;
+	private JMenuItem exitMenuItem;
 
 	private DecimalFormat integerFormat = new DecimalFormat("#");
 	private DecimalFormat realFormat = new DecimalFormat("#.##");
@@ -81,11 +87,48 @@ public class Main extends JFrame
 		setTitle("OSRS DPS calculator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 603, 452);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		fileMenu = new JMenu("Menu");
+		helpMenuItem = new JMenuItem("Help");
+		helpMenuItem.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				new Help(getLocation(), getWidth(), getHeight());
+			}
+		});
+		
+		optionsMenuItem = new JMenuItem("Options");
+		optionsMenuItem.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				
+			}
+		});
+		
+		exitMenuItem = new JMenuItem("Exit");
+		exitMenuItem.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				dispose();
+			}
+		});
+		
+		fileMenu.add(helpMenuItem);
+		fileMenu.add(optionsMenuItem);
+		fileMenu.add(exitMenuItem);
+		menuBar.add(fileMenu);
+		
+		/*
 		try 
 		{
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
@@ -110,6 +153,7 @@ public class Main extends JFrame
 				e1.printStackTrace();
 			} 
 		}
+		*/
 
 		ATT_textField = new JTextField();
 		ATT_textField.setText("1");
@@ -335,17 +379,6 @@ public class Main extends JFrame
 		});
 		CALCULATE_btn.setBounds(34, 266, 89, 33);
 		contentPane.add(CALCULATE_btn);
-		
-		JButton HELP_btn = new JButton("Help");
-		HELP_btn.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				new Help(getLocation(), getWidth(), getHeight());
-			}
-		});
-		HELP_btn.setBounds(284, 266, 89, 33);
-		contentPane.add(HELP_btn);
 		
 		JLabel ATT_POT_lbl = new JLabel("Potion 1");
 		ATT_POT_lbl.setBounds(284, 76, 105, 23);
