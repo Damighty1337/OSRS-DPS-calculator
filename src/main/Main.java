@@ -147,7 +147,7 @@ public class Main extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
+				//TODO: Implement LookAndFeel options in the options menu
 			}
 		});
 		
@@ -158,8 +158,6 @@ public class Main extends JFrame
 				dispose();
 			}
 		});
-		
-		//TODO: Implement LookAndFeel options in the options menu
 		
 		/*
 		try 
@@ -199,7 +197,7 @@ public class Main extends JFrame
 		VOID_label = new JLabel("Void");
 		RANGED_lbl = new JLabel("Ranged");
 		MAX_HIT_lbl = new JLabel("Max hit:");
-		ACCURACY_lbl = new JLabel("Accuracy: ");
+		ACCURACY_lbl = new JLabel("Accuracy:");
 		DPS_lbl = new JLabel("DPS:");
 		MAX_HIT_RESULT_lbl = new JLabel("0");
 		ACCURACY_RESULT_lbl = new JLabel("0%");
@@ -274,9 +272,9 @@ public class Main extends JFrame
 		AS_textField.setColumns(10);
 		AS_textField.setBounds(149, 138, 86, 23);
 	
-		DHAROKS_checkBox.setBounds(399, 200, 97, 23);
 		VOID_checkBox.setBounds(149, 200, 97, 23);
 		RANGED_checkBox.setBounds(149, 231, 97, 23);
+		DHAROKS_checkBox.setBounds(399, 200, 97, 23);
 
 		ENEMY_DEF_textField.setText("0");
 		ENEMY_DEF_textField.setColumns(10);
