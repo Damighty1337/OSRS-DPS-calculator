@@ -20,7 +20,6 @@ import java.awt.event.ItemEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public class Main extends JFrame
 {
 
@@ -66,11 +65,11 @@ public class Main extends JFrame
 	private JTextField ENEMY_DEF_BONUS_textField;
 	private JTextField CUR_HP_textField;
 	private JTextField MAX_HP_textField;
-	private JComboBox STANCE_comboBox;
-	private JComboBox ATT_POTION_comboBox;
-	private JComboBox STR_POTION_comboBox;
-	private JComboBox ATT_PRAYER_comboBox;
-	private JComboBox STR_PRAYER_comboBox;
+	private JComboBox<String> STANCE_comboBox;
+	private JComboBox<String> ATT_POTION_comboBox;
+	private JComboBox<String> STR_POTION_comboBox;
+	private JComboBox<String> ATT_PRAYER_comboBox;
+	private JComboBox<String> STR_PRAYER_comboBox;
 	private JCheckBox VOID_checkBox;
 	private JCheckBox RANGED_checkBox;
 	private JCheckBox DHAROKS_checkBox;
@@ -218,11 +217,11 @@ public class Main extends JFrame
 		ENEMY_DEF_BONUS_textField = new JTextField();
 		CUR_HP_textField = new JTextField();
 		MAX_HP_textField = new JTextField();
-		STANCE_comboBox = new JComboBox();
-		ATT_POTION_comboBox = new JComboBox();
-		STR_POTION_comboBox = new JComboBox();
-		ATT_PRAYER_comboBox = new JComboBox();
-		STR_PRAYER_comboBox = new JComboBox();
+		STANCE_comboBox = new JComboBox<String>();
+		ATT_POTION_comboBox = new JComboBox<String>();
+		STR_POTION_comboBox = new JComboBox<String>();
+		ATT_PRAYER_comboBox = new JComboBox<String>();
+		STR_PRAYER_comboBox = new JComboBox<String>();
 		VOID_checkBox = new JCheckBox("");
 		RANGED_checkBox = new JCheckBox("");
 		DHAROKS_checkBox = new JCheckBox("");
@@ -284,28 +283,28 @@ public class Main extends JFrame
 		ENEMY_DEF_BONUS_textField.setColumns(10);
 		ENEMY_DEF_BONUS_textField.setBounds(399, 45, 86, 23);
 
-		STANCE_comboBox.setModel(new DefaultComboBoxModel(new String[] { "Accurate", "Aggressive", "Controlled", "Other" }));
+		STANCE_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "Accurate", "Aggressive", "Controlled", "Other" }));
 		STANCE_comboBox.setSelectedIndex(0);
 		STANCE_comboBox.setToolTipText("");
 		STANCE_comboBox.setBounds(149, 169, 105, 23);
 		
+		ATT_PRAYER_comboBox.setToolTipText("");
+		ATT_PRAYER_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"None", "5% ATT", "10% ATT", "15% ATT", "Chivarly", "Piety", "Rigour"}));
+		ATT_PRAYER_comboBox.setSelectedIndex(0);
+		ATT_PRAYER_comboBox.setBounds(399, 138, 105, 23);
+		
 		STR_PRAYER_comboBox.setToolTipText("");
-		STR_PRAYER_comboBox.setModel(new DefaultComboBoxModel(new String[] {"None", "5% STR", "10% STR", "15% STR", "Chivalry", "Piety", "Rigour"}));
+		STR_PRAYER_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"None", "5% STR", "10% STR", "15% STR", "Chivalry", "Piety", "Rigour"}));
 		STR_PRAYER_comboBox.setSelectedIndex(0);
 		STR_PRAYER_comboBox.setBounds(399, 169, 105, 23);
 		
 		ATT_POTION_comboBox.setToolTipText("");
-		ATT_POTION_comboBox.setModel(new DefaultComboBoxModel(new String[] {"None", "Attack", "Super attack", "Zamorak brew", "Ranging", "Super ranging", "Overload"}));
+		ATT_POTION_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"None", "Attack", "Super attack", "Zamorak brew", "Ranging", "Super ranging", "Overload"}));
 		ATT_POTION_comboBox.setSelectedIndex(0);
 		ATT_POTION_comboBox.setBounds(399, 76, 105, 23);
 		
-		ATT_PRAYER_comboBox.setToolTipText("");
-		ATT_PRAYER_comboBox.setModel(new DefaultComboBoxModel(new String[] {"None", "5% ATT", "10% ATT", "15% ATT", "Chivarly", "Piety", "Rigour"}));
-		ATT_PRAYER_comboBox.setSelectedIndex(0);
-		ATT_PRAYER_comboBox.setBounds(399, 138, 105, 23);
-		
 		STR_POTION_comboBox.setToolTipText("");
-		STR_POTION_comboBox.setModel(new DefaultComboBoxModel(new String[] {"None", "Strength", "Super strength", "Overload"}));
+		STR_POTION_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"None", "Strength", "Super strength", "Zamorak brew", "Overload"}));
 		STR_POTION_comboBox.setSelectedIndex(0);
 		STR_POTION_comboBox.setBounds(399, 107, 105, 23);
 		
@@ -397,12 +396,13 @@ public class Main extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				maxHit = formulas.maxHit(Integer.parseInt(STR_textField.getText()), Integer.parseInt(STR_BONUS_textField.getText()),
-						STR_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(), STANCE_comboBox.getSelectedIndex(), 
-						RANGED_checkBox.isSelected());
+						STR_POTION_comboBox.getSelectedIndex(), STR_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(),
+						STANCE_comboBox.getSelectedIndex(), RANGED_checkBox.isSelected());
 				
 				accuracy = formulas.accuracy(Integer.parseInt(ATT_textField.getText()), Integer.parseInt(ATT_BONUS_textField.getText()),
-						ATT_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(), STANCE_comboBox.getSelectedIndex(), 
-						Integer.parseInt(ENEMY_DEF_textField.getText()), Integer.parseInt(ENEMY_DEF_BONUS_textField.getText()));
+						ATT_POTION_comboBox.getSelectedIndex(), ATT_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(), 
+						STANCE_comboBox.getSelectedIndex(),  Integer.parseInt(ENEMY_DEF_textField.getText()), 
+						Integer.parseInt(ENEMY_DEF_BONUS_textField.getText()));
 				
 				dps = 1 / Double.parseDouble(AS_textField.getText()) * accuracy * (maxHit / 2);
 				

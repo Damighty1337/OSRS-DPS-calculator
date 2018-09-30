@@ -63,9 +63,36 @@ public class Formulas
 	double ATT_ROLL;
 	double DEF_ROLL;
 	
-	public double maxHit(int level, int equipmentBonus, int strengthPrayer, boolean voidMultiplier, int stance, boolean ranged)
+	double strengthLevel;
+	double attackLevel;
+	
+	public double maxHit(int level, int equipmentBonus, int strengthPotion, int strengthPrayer, boolean voidMultiplier, int stance, boolean ranged)
 	{
-		switch(strengthPrayer + 1)
+		strengthLevel = level;
+		
+		switch (strengthPotion + 1)
+		{
+		case 1:
+			strengthLevel = level;
+			break;
+		case 2:
+			strengthLevel += 3 + Math.floor(0.1 * level);
+			break;
+		case 3:
+			strengthLevel += 5 + Math.floor(0.15 * level);
+			break;
+		case 4:
+			strengthLevel += 2 + Math.floor(0.12 * level);
+			break;
+		case 5:
+			strengthLevel += 5 + Math.floor(0.15 * level);
+			break;
+		default:
+			strengthLevel = level;
+			break;
+		}
+		
+		switch (strengthPrayer + 1)
 		{
 		case 1:
 			hitPrayer = 1.00;
@@ -93,7 +120,7 @@ public class Formulas
 			break;
 		}
 		
-		switch(stance + 1) 
+		switch (stance + 1) 
 		{
 		case 1:
 			if (ranged) hitStanceBonus = 3;
@@ -115,19 +142,49 @@ public class Formulas
 		
 		if (voidMultiplier)
 		{
-			maxHitEffectiveLevel = 1.1 * (Math.floor(level * hitPrayer) + hitStanceBonus + 8);			
+			maxHitEffectiveLevel = 1.1 * (Math.floor(strengthLevel * hitPrayer) + hitStanceBonus + 8);			
 		}
 		else
 		{
-			maxHitEffectiveLevel = Math.floor(level * hitPrayer) + hitStanceBonus + 8;
+			maxHitEffectiveLevel = Math.floor(strengthLevel * hitPrayer) + hitStanceBonus + 8;
 		}
 		
 		return Math.floor(0.5 + maxHitEffectiveLevel * (equipmentBonus + 64) / 640);
 	}
 	
-	public double accuracy(int level, int equipmentBonus, int attackPrayer, boolean voidMultiplier, int stance, int enemyDefLevel, int enemyDefBonus)
+	public double accuracy(int level, int equipmentBonus, int attackPotion, int attackPrayer, boolean voidMultiplier, int stance, int enemyDefLevel, int enemyDefBonus)
 	{
-		switch(attackPrayer + 1)
+		attackLevel = level;
+		
+		switch (attackPotion + 1)
+		{
+		case 1:
+			attackLevel = level;
+			break;
+		case 2:
+			attackLevel += 3 + Math.floor(0.1 * level);
+			break;
+		case 3:
+			attackLevel += 5 + Math.floor(0.15 * level);
+			break;
+		case 4:
+			attackLevel += 2 + Math.floor(0.2 * level);
+			break;
+		case 5:
+			attackLevel += 4 + Math.floor(0.1 * level);
+			break;
+		case 6:
+			attackLevel += 5 + Math.floor(0.15 * level);
+			break;
+		case 7:
+			attackLevel += 5 + Math.floor(0.15 * level);
+			break;
+		default:
+			attackLevel = level;
+			break;
+		}
+		
+		switch (attackPrayer + 1)
 		{
 		case 1:
 			accuracyPrayer = 1.00;
@@ -155,7 +212,7 @@ public class Formulas
 			break;
 		}
 		
-		switch(stance + 1)
+		switch (stance + 1)
 		{
 		case 1:
 			accuracyStanceBonus = 3;
@@ -176,11 +233,11 @@ public class Formulas
 		
 		if (voidMultiplier)
 		{			
-			ATT_ROLL = Math.floor(1.1 * (Math.floor(level * accuracyPrayer) + accuracyStanceBonus + 8)) * (equipmentBonus + 64);
+			ATT_ROLL = Math.floor(1.1 * (Math.floor(attackLevel * accuracyPrayer) + accuracyStanceBonus + 8)) * (equipmentBonus + 64);
 		}
 		else
 		{			
-			ATT_ROLL = Math.floor(1.0 * (Math.floor(level * accuracyPrayer) + accuracyStanceBonus + 8)) * (equipmentBonus + 64);
+			ATT_ROLL = Math.floor(1.0 * (Math.floor(attackLevel * accuracyPrayer) + accuracyStanceBonus + 8)) * (equipmentBonus + 64);
 		}
 		
 		DEF_ROLL = (enemyDefLevel + 8) * (enemyDefBonus + 64);
