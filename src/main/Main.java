@@ -84,9 +84,6 @@ public class Main extends JFrame
 	private double accuracy = 0;
 	private double dps = 0;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args)
 	{
 		EventQueue.invokeLater(new Runnable()
@@ -107,9 +104,6 @@ public class Main extends JFrame
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Main()
 	{
 		setResizable(false);
@@ -171,17 +165,17 @@ public class Main extends JFrame
 		        }
 		    }
 		}
-		catch (Exception e) 
+		catch (Exception e1) 
 		{
-			e.printStackTrace();
+			e1.printStackTrace();
 			
 			try
 			{
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			}
-			catch (Exception e1)
+			catch (Exception e2)
 			{
-				e1.printStackTrace();
+				e2.printStackTrace();
 			} 
 		}
 		
@@ -283,9 +277,9 @@ public class Main extends JFrame
 		ENEMY_DEF_BONUS_textField.setColumns(10);
 		ENEMY_DEF_BONUS_textField.setBounds(399, 45, 86, 23);
 
+		STANCE_comboBox.setToolTipText("");
 		STANCE_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "Accurate", "Aggressive", "Controlled", "Other" }));
 		STANCE_comboBox.setSelectedIndex(0);
-		STANCE_comboBox.setToolTipText("");
 		STANCE_comboBox.setBounds(149, 169, 105, 23);
 		
 		ATT_PRAYER_comboBox.setToolTipText("");
@@ -332,6 +326,28 @@ public class Main extends JFrame
 				else
 				{
 					RANGED_checkBox.setEnabled(true);
+				}
+			}
+		});
+		
+		ATT_POTION_comboBox.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				if (ATT_POTION_comboBox.getSelectedIndex() == 3)
+				{
+					STR_POTION_comboBox.setSelectedIndex(3);
+				}
+			}
+		});
+		
+		STR_POTION_comboBox.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				if (STR_POTION_comboBox.getSelectedIndex() == 3)
+				{
+					ATT_POTION_comboBox.setSelectedIndex(3);
 				}
 			}
 		});
@@ -449,7 +465,8 @@ public class Main extends JFrame
 	{
 		maxHit = formulas.maxHit(Integer.parseInt(STR_textField.getText()), Integer.parseInt(STR_BONUS_textField.getText()),
 				STR_POTION_comboBox.getSelectedIndex(), STR_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(),
-				STANCE_comboBox.getSelectedIndex(), RANGED_checkBox.isSelected());
+				STANCE_comboBox.getSelectedIndex(), RANGED_checkBox.isSelected(), DHAROKS_checkBox.isSelected(), 
+				Integer.parseInt(CUR_HP_textField.getText()), Integer.parseInt(MAX_HP_textField.getText()));
 		
 		accuracy = formulas.accuracy(Integer.parseInt(ATT_textField.getText()), Integer.parseInt(ATT_BONUS_textField.getText()),
 				ATT_POTION_comboBox.getSelectedIndex(), ATT_PRAYER_comboBox.getSelectedIndex(), VOID_checkBox.isSelected(), 

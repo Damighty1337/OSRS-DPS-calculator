@@ -16,9 +16,6 @@ public class Help extends JFrame
 	
 	private JLabel HELP_lbl;
 
-	/**
-	 * Create the frame.
-	 */
 	public Help(Point location, int width, int height)
 	{
 		setResizable(false);
@@ -30,6 +27,8 @@ public class Help extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		setContentPane(contentPane);
+		
+		//TODO: Update
 		
 		HELP_lbl = new JLabel("<html>\r\n<b>Documentation</b><br><br>\r\nATT/RNG = Attack or ranged level<br><br>\r\nSTR/RNG = Strength or ranged level<br><br>\r\nATT_BONUS = Equipment bonus for corresponding attack type<br><br>\r\nSTR_BONUS = Strength or ranged strength bonus<br><br>\r\nAS = Interval between attacks in seconds<br><br>\r\nE_DEF = Enemy defence level<br><br>\r\nE_DEF_BONUS = Enemy defence equipment bonus for corresponding attack type<br><br>\r\nStance = Attack style. Note that aggressive and controlled are melee only styles<br><br>\r\nVoid = Check if using a Void set<br><br>\r\nRanged = Check if using a ranged weapon\r\n</html");
 		HELP_lbl.setVerticalAlignment(SwingConstants.TOP);
