@@ -28,7 +28,7 @@ public class Main extends JFrame
 	
 	private DecimalFormat integerFormat = new DecimalFormat("#");
 	private DecimalFormat realFormat = new DecimalFormat("#.##");
-	private DecimalFormat xpFormat = new DecimalFormat("#.#");
+	private DecimalFormat xpFormat = new DecimalFormat("#,###,###");
 
 	private double maxHit = 0;
 	private double accuracy = 0;
@@ -60,7 +60,7 @@ public class Main extends JFrame
 		setResizable(false);
 		setTitle("OSRS DPS calculator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 603, 496);
+		setBounds(100, 100, 570, 496);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -135,11 +135,11 @@ public class Main extends JFrame
 		JTextField STR_textField = new JTextField();
 		JTextField ATT_BONUS_textField = new JTextField();
 		JTextField STR_BONUS_textField = new JTextField();
-		JTextField AS_textField = new JTextField();
 		JTextField ENEMY_DEF_textField = new JTextField();
 		JTextField ENEMY_DEF_BONUS_textField = new JTextField();
 		JTextField CUR_HP_textField = new JTextField();
 		JTextField MAX_HP_textField = new JTextField();
+		JComboBox<String> AS_comboBox = new JComboBox<String>();
 		JComboBox<String> STANCE_comboBox = new JComboBox<String>();
 		JComboBox<String> ATT_POTION_comboBox = new JComboBox<String>();
 		JComboBox<String> STR_POTION_comboBox = new JComboBox<String>();
@@ -155,8 +155,8 @@ public class Main extends JFrame
 		ATT_BONUS_lbl.setBounds(34, 76, 105, 23);
 		STR_BONUS_lbl.setBounds(34, 107, 105, 23);
 		AS_lbl.setBounds(34, 138, 105, 23);
-		ENEMY_DEF_lbl.setBounds(284, 14, 105, 23);
-		ENEMY_DEF_BONUS_lbl.setBounds(284, 45, 105, 23);
+		ENEMY_DEF_lbl.setBounds(303, 14, 105, 23);
+		ENEMY_DEF_BONUS_lbl.setBounds(303, 45, 105, 23);
 		STANCE_lbl.setBounds(34, 169, 105, 23);
 		VOID_lbl.setBounds(34, 200, 105, 23);
 		RANGED_lbl.setBounds(34, 231, 105, 23);
@@ -168,13 +168,13 @@ public class Main extends JFrame
 		ACCURACY_RESULT_lbl.setBounds(149, 340, 86, 14);
 		DPS_RESULT_lbl.setBounds(149, 365, 86, 14);
 		XP_RESULT_lbl.setBounds(149, 390, 86, 14);
-		ATT_POTION_lbl.setBounds(284, 76, 105, 23);
-		STR_POTION_lbl.setBounds(284, 107, 105, 23);
-		ATT_PRAYER_lbl.setBounds(284, 138, 105, 23);
-		STR_PRAYER_lbl.setBounds(284, 169, 105, 23);
-		DHAROKS_lbl.setBounds(284, 200, 105, 23);
-		HP_lbl.setBounds(284, 231, 105, 20);
-		HP_SEPERATOR_lbl.setBounds(444, 232, 46, 23);
+		ATT_POTION_lbl.setBounds(303, 76, 105, 23);
+		STR_POTION_lbl.setBounds(303, 107, 105, 23);
+		ATT_PRAYER_lbl.setBounds(303, 138, 105, 23);
+		STR_PRAYER_lbl.setBounds(303, 169, 105, 23);
+		DHAROKS_lbl.setBounds(303, 200, 105, 23);
+		HP_lbl.setBounds(303, 231, 105, 20);
+		HP_SEPERATOR_lbl.setBounds(463, 232, 25, 23);
 
 		ATT_textField.setText("1");
 		ATT_textField.setBounds(149, 14, 86, 23);
@@ -192,64 +192,90 @@ public class Main extends JFrame
 		STR_BONUS_textField.setColumns(10);
 		STR_BONUS_textField.setBounds(149, 107, 86, 23);
 
-		AS_textField.setText("2.4");
-		AS_textField.setColumns(10);
-		AS_textField.setBounds(149, 138, 86, 23);
-
 		VOID_checkBox.setBounds(149, 200, 97, 23);
 		RANGED_checkBox.setBounds(149, 231, 97, 23);
-		DHAROKS_checkBox.setBounds(399, 200, 97, 23);
+		DHAROKS_checkBox.setBounds(418, 200, 97, 23);
 
 		ENEMY_DEF_textField.setText("1");
 		ENEMY_DEF_textField.setColumns(10);
-		ENEMY_DEF_textField.setBounds(399, 14, 86, 23);
+		ENEMY_DEF_textField.setBounds(418, 14, 86, 23);
 
 		ENEMY_DEF_BONUS_textField.setText("0");
 		ENEMY_DEF_BONUS_textField.setColumns(10);
-		ENEMY_DEF_BONUS_textField.setBounds(399, 45, 86, 23);
+		ENEMY_DEF_BONUS_textField.setBounds(418, 45, 86, 23);
 
+		String[] AS_model = new String[] { "Unarmed", "Dagger", "Shortsword", "Scimitar", 
+				"Longsword", "Warhammer", "Battleaxe", "2h sword", "Whip/bludgeon", 
+				"Godsword", "Dharok's g'axe", "Dart/knife", "Dart/knife (rapid)", "Shortbow", 
+				"Shortbow (rapid)", "Crossbow", "Crossbow (rapid)", "Blowpipe", "Blowpipe (rapid)", 
+				"Karil's c'bow", "Karil's c'bow (rapid)" };
+		
+		String[] STANCE_model = new String[] { "Accurate", "Aggressive", "Controlled", "Other" };
+		
+		String[] ATT_PRAYER_model = new String[] { "None", "5% ATT", "10% ATT", "15% ATT", "Chivarly",
+				"Piety", "Rigour" };
+		
+		String[] STR_PRAYER_model = new String[] { "None", "5% STR", "10% STR", "15% STR", "Chivalry", 
+				"Piety", "Rigour" };
+		
+		String[] ATT_POTION_model = new String[] { "None", "Attack", "Super attack", "Zamorak brew", 
+				"Ranging", "Super ranging", "Overload" };
+		
+		String[] STR_POTION_model = new String[] { "None", "Strength", "Super strength", "Zamorak brew",
+				"Ranging", "Super ranging", "Overload" };
+		
+		AS_comboBox.setToolTipText("");
+		AS_comboBox.setModel(new DefaultComboBoxModel<String>(AS_model));
+		AS_comboBox.setSelectedIndex(0);
+		AS_comboBox.setBounds(151, 138, 140, 23);
+		
 		STANCE_comboBox.setToolTipText("");
-		STANCE_comboBox.setModel(
-				new DefaultComboBoxModel<String>(new String[] { "Accurate", "Aggressive", "Controlled", "Other" }));
+		STANCE_comboBox.setModel(new DefaultComboBoxModel<String>(STANCE_model));
 		STANCE_comboBox.setSelectedIndex(0);
-		STANCE_comboBox.setBounds(149, 169, 105, 23);
+		STANCE_comboBox.setBounds(151, 169, 105, 23);
 
 		ATT_PRAYER_comboBox.setToolTipText("");
-		ATT_PRAYER_comboBox.setModel(new DefaultComboBoxModel<String>(
-				new String[] { "None", "5% ATT", "10% ATT", "15% ATT", "Chivarly", "Piety", "Rigour" }));
+		ATT_PRAYER_comboBox.setModel(new DefaultComboBoxModel<String>(ATT_PRAYER_model));
 		ATT_PRAYER_comboBox.setSelectedIndex(0);
-		ATT_PRAYER_comboBox.setBounds(399, 138, 105, 23);
+		ATT_PRAYER_comboBox.setBounds(418, 138, 105, 23);
 
 		STR_PRAYER_comboBox.setToolTipText("");
-		STR_PRAYER_comboBox.setModel(new DefaultComboBoxModel<String>(
-				new String[] { "None", "5% STR", "10% STR", "15% STR", "Chivalry", "Piety", "Rigour" }));
+		STR_PRAYER_comboBox.setModel(new DefaultComboBoxModel<String>(STR_PRAYER_model));
 		STR_PRAYER_comboBox.setSelectedIndex(0);
-		STR_PRAYER_comboBox.setBounds(399, 169, 105, 23);
+		STR_PRAYER_comboBox.setBounds(418, 169, 105, 23);
 
 		ATT_POTION_comboBox.setToolTipText("");
-		ATT_POTION_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "None", "Attack", "Super attack",
-				"Zamorak brew", "Ranging", "Super ranging", "Overload" }));
+		ATT_POTION_comboBox.setModel(new DefaultComboBoxModel<String>(ATT_POTION_model));
 		ATT_POTION_comboBox.setSelectedIndex(0);
-		ATT_POTION_comboBox.setBounds(399, 76, 105, 23);
+		ATT_POTION_comboBox.setBounds(418, 76, 105, 23);
 
 		STR_POTION_comboBox.setToolTipText("");
-		STR_POTION_comboBox.setModel(new DefaultComboBoxModel<String>(
-				new String[] { "None", "Strength", "Super strength", "Zamorak brew", "Overload" }));
+		STR_POTION_comboBox.setModel(new DefaultComboBoxModel<String>(STR_POTION_model));
 		STR_POTION_comboBox.setSelectedIndex(0);
-		STR_POTION_comboBox.setBounds(399, 107, 105, 23);
+		STR_POTION_comboBox.setBounds(418, 107, 105, 23);
 
 		CUR_HP_textField.setEnabled(false);
 		CUR_HP_textField.setText("1");
 		CUR_HP_textField.setColumns(10);
-		CUR_HP_textField.setBounds(399, 231, 33, 23);
+		CUR_HP_textField.setBounds(418, 231, 33, 23);
 
 		MAX_HP_textField.setEnabled(false);
 		MAX_HP_textField.setText("10");
 		MAX_HP_textField.setColumns(10);
-		MAX_HP_textField.setBounds(461, 231, 33, 23);
+		MAX_HP_textField.setBounds(480, 231, 33, 23);
 
 		CALCULATE_btn.setBounds(34, 266, 89, 33);
-
+		
+		AS_comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e)
+			{
+				if (AS_comboBox.getSelectedItem().toString().contains("rapid"))
+				{
+					STANCE_comboBox.setSelectedIndex(3);
+				}
+			}
+		});
+		
 		STANCE_comboBox.addItemListener(new ItemListener()
 		{
 			public void itemStateChanged(ItemEvent e)
@@ -276,7 +302,7 @@ public class Main extends JFrame
 				}
 				else if (ATT_POTION_comboBox.getSelectedIndex() == 6)
 				{
-					STR_POTION_comboBox.setSelectedIndex(4);
+					STR_POTION_comboBox.setSelectedIndex(6);
 				}
 			}
 		});
@@ -289,7 +315,7 @@ public class Main extends JFrame
 				{
 					ATT_POTION_comboBox.setSelectedIndex(3);
 				}
-				else if (STR_POTION_comboBox.getSelectedIndex() == 4)
+				else if (STR_POTION_comboBox.getSelectedIndex() == 6)
 				{
 					ATT_POTION_comboBox.setSelectedIndex(6);
 				}
@@ -370,14 +396,14 @@ public class Main extends JFrame
 						STANCE_comboBox.getSelectedIndex(), Integer.parseInt(ENEMY_DEF_textField.getText()),
 						Integer.parseInt(ENEMY_DEF_BONUS_textField.getText()));
 
-				dps = 1 / Double.parseDouble(AS_textField.getText()) * accuracy * (maxHit / 2);
+				dps = 1 / formulas.getAttackSpeed(AS_comboBox) * accuracy * (maxHit / 2);
 				
 				xpPerHour = dps * 3600 * 4;
 
 				MAX_HIT_RESULT_lbl.setText(integerFormat.format(maxHit));
 				ACCURACY_RESULT_lbl.setText(realFormat.format(100 * accuracy) + "%");
 				DPS_RESULT_lbl.setText(realFormat.format(dps));
-				XP_RESULT_lbl.setText(xpFormat.format(xpPerHour / 1000) + "k");
+				XP_RESULT_lbl.setText(xpFormat.format(xpPerHour));
 			}
 		});
 
@@ -406,7 +432,6 @@ public class Main extends JFrame
 		getContentPane().add(STR_textField);
 		getContentPane().add(ATT_BONUS_textField);
 		getContentPane().add(STR_BONUS_textField);
-		getContentPane().add(AS_textField);
 		getContentPane().add(ENEMY_DEF_textField);
 		getContentPane().add(ENEMY_DEF_BONUS_textField);
 		getContentPane().add(STANCE_comboBox);
@@ -424,6 +449,7 @@ public class Main extends JFrame
 		getContentPane().add(CUR_HP_textField);
 		getContentPane().add(MAX_HP_textField);
 		getContentPane().add(CALCULATE_btn);
+		getContentPane().add(AS_comboBox);
 		
 		CALCULATE_btn.doClick();
 
